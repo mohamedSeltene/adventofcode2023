@@ -11,6 +11,5 @@ public class AdventOfCode {
         Common.displayResult(day1_1.processInput());
         Input day1_2 = new Day1_2();
         Common.displayResult(day1_2.processInput());
-
     }
 }
