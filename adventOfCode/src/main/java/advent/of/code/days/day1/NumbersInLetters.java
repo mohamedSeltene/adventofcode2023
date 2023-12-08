@@ -12,11 +12,12 @@ public enum NumbersInLetters {
     NINE(9);
 
     private final int value;
-    NumbersInLetters(int value){
+
+    NumbersInLetters(int value) {
         this.value = value;
     }
 
-    public int getValue(){
+    public int getValue() {
         return value;
     }
 }
