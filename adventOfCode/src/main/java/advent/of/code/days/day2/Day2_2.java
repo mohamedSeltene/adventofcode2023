@@ -3,6 +3,8 @@ package advent.of.code.days.day2;
 import advent.of.code.days.Input;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,52 +21,18 @@ public class Day2_2 implements Input {
 
     private int processGame(String game) {
         String[] subSets = game.split(";");
-        int minRed = 0;
-        int minBlue = 0;
-        int minGreen = 0;
+
+        EnumMap<BallColors, Integer> coloursCount = new EnumMap<>(BallColors.class);
 
         for (String subSet : subSets) {
-            if (getMinRed(subSet) > minRed) {
-                minRed = getMinRed(subSet);
-            }
-            if (getMinBlue(subSet) > minBlue) {
-                minBlue = getMinBlue(subSet);
-            }
-            if (getMinGreen(subSet) > minGreen) {
-                minGreen = getMinGreen(subSet);
+            for (String grab : subSet.split(",")) {
+                BallColors color = extractColor(grab);
+                int number = extractNumber(grab);
+                coloursCount.merge(color, number, Integer::max);
             }
         }
-        return minRed * minGreen * minBlue;
-    }
-
-    private int getMinGreen(String subSet) {
-        String[] grabs = subSet.split(",");
-        for (String grab : grabs) {
-            if (extractColor(grab).equals(BallColors.GREEN)) {
-                return extractNumber(grab);
-            }
-        }
-        return 0;
-    }
-
-    private int getMinBlue(String subSet) {
-        String[] grabs = subSet.split(",");
-        for (String grab : grabs) {
-            if (extractColor(grab).equals(BallColors.BLUE)) {
-                return extractNumber(grab);
-            }
-        }
-        return 0;
-    }
-
-    private int getMinRed(String subSet) {
-        String[] grabs = subSet.split(",");
-        for (String grab : grabs) {
-            if (extractColor(grab).equals(BallColors.RED)) {
-                return extractNumber(grab);
-            }
-        }
-        return 0;
+        return coloursCount.values().stream()
+                .reduce((val1, val2) -> val1 * val2).get();
     }
 
     private int extractNumber(String str) {
@@ -77,13 +45,8 @@ public class Day2_2 implements Input {
     }
 
     private BallColors extractColor(String str) {
-        if (str.contains(BallColors.BLUE.name().toLowerCase())) {
-            return BallColors.BLUE;
-        } else if (str.contains(BallColors.RED.name().toLowerCase())) {
-            return BallColors.RED;
-        } else {
-            return BallColors.GREEN;
-        }
+        return Arrays.stream(BallColors.values())
+                .filter(ballColors -> str.contains(ballColors.name().toLowerCase()))
+                .findAny().get();
     }
-
 }

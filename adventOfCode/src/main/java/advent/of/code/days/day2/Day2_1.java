@@ -3,10 +3,13 @@ package advent.of.code.days.day2;
 import advent.of.code.days.Input;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Day2_1 implements Input {
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
+
     @Override
     public Object processInput() throws IOException {
         return readInput().entrySet().stream()
@@ -40,8 +43,7 @@ public class Day2_1 implements Input {
     }
 
     private int extractNumber(String str) {
-        Pattern pattern = Pattern.compile("\\d+");
-        Matcher matcher = pattern.matcher(str);
+        Matcher matcher = NUMBER_PATTERN.matcher(str);
 
         if (matcher.find()) {
             return Integer.parseInt(matcher.group());
@@ -50,12 +52,8 @@ public class Day2_1 implements Input {
     }
 
     private BallColors extractColor(String str) {
-        if (str.contains(BallColors.BLUE.name().toLowerCase())) {
-            return BallColors.BLUE;
-        } else if (str.contains(BallColors.RED.name().toLowerCase())) {
-            return BallColors.RED;
-        } else {
-            return BallColors.GREEN;
-        }
+        return Arrays.stream(BallColors.values())
+                .filter(ballColors -> str.contains(ballColors.name().toLowerCase()))
+                .findAny().get();
     }
 }
