@@ -14,7 +14,7 @@ public interface Input {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
         Map<Integer, String> allInput = new HashMap<>();
-        Integer counter = 0;
+        Integer counter = 1;
         while (true) {
             String currentLine = reader.readLine();
             if (currentLine == null) {
