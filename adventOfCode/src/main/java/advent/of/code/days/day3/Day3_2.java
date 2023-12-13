@@ -12,10 +12,10 @@ public class Day3_2 implements Input {
     public Object processInput() throws IOException {
         Map<Integer, String> input = readInput();
         List<Number> allNumbers = identifyNumbers(input);
-        List<Coordonates> allSymbols = identifySymbols(input);
+        List<Coordinate> allSymbols = identifySymbols(input);
         for (Number number : allNumbers) {
             for (int i = number.getX(); i < number.getX() + number.getLength(); i++) {
-                for (Coordonates symbol : allSymbols) {
+                for (Coordinate symbol : allSymbols) {
                     if (i >= symbol.getX() - 1
                             && i <= symbol.getX() + 1
                             && number.getY() >= symbol.getY() - 1
@@ -26,8 +26,8 @@ public class Day3_2 implements Input {
                 }
             }
         }
-        return allSymbols.stream().filter(coordonates -> coordonates.getAdjacentNumbers().size()== 2)
-                .mapToInt(coordonates -> coordonates.getAdjacentNumbers().stream()
+        return allSymbols.stream().filter(coordinate -> coordinate.getAdjacentNumbers().size()== 2)
+                .mapToInt(coordinate -> coordinate.getAdjacentNumbers().stream()
                         .map(Number::getValue)
                         .reduce((integer, integer2) -> integer * integer2)
                         .get())
@@ -54,17 +54,17 @@ public class Day3_2 implements Input {
         return numbers;
     }
 
-    private List<Coordonates> identifySymbols(Map<Integer, String> input) {
-        List<Coordonates> coordonatesList = new ArrayList<>();
+    private List<Coordinate> identifySymbols(Map<Integer, String> input) {
+        List<Coordinate> coordinateList = new ArrayList<>();
         for (Map.Entry<Integer, String> line : input.entrySet()) {
             char[] currentLine = line.getValue().toCharArray();
             for (int i = 0; i < currentLine.length; i++) {
                 if (isSymbol(currentLine[i])) {
-                    coordonatesList.add(new Coordonates(i, line.getKey()));
+                    coordinateList.add(new Coordinate(i, line.getKey()));
                 }
             }
         }
-        return coordonatesList;
+        return coordinateList;
     }
 
     private boolean isSymbol(char c) {

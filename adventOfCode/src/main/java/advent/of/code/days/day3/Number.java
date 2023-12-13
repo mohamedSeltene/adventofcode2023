@@ -6,8 +6,6 @@ public class Number {
     int X;
     int Y;
 
-    boolean alreadyCalculated = false;
-
     public int getValue() {
         return value;
     }
@@ -30,14 +28,6 @@ public class Number {
 
     public void setY(int y) {
         Y = y;
-    }
-
-    public boolean isAlreadyCalculated() {
-        return alreadyCalculated;
-    }
-
-    public void setAlreadyCalculated(boolean alreadyCalculated) {
-        this.alreadyCalculated = alreadyCalculated;
     }
 
     public int getLength(){

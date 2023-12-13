@@ -3,14 +3,14 @@ package advent.of.code.days.day3;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Coordonates {
+public class Coordinate {
 
     int X;
     int Y;
 
     Set<Number> adjacentNumbers;
 
-    public Coordonates(int x, int y) {
+    public Coordinate(int x, int y) {
         X = x;
         Y = y;
     }
@@ -19,23 +19,15 @@ public class Coordonates {
         return X;
     }
 
-    public void setX(int x) {
-        X = x;
-    }
-
     public int getY() {
         return Y;
-    }
-
-    public void setY(int y) {
-        Y = y;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Coordonates that = (Coordonates) o;
+        Coordinate that = (Coordinate) o;
         return X == that.X && Y == that.Y;
     }
 
