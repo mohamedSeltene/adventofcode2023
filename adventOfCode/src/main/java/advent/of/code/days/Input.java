@@ -10,7 +10,7 @@ public interface Input {
 
     default Map<Integer, String> readInput() throws IOException {
         String fileName = Common.buildFileName(this.getClass());
-        String filePath = "src/main/resources/inputs/" + fileName;
+        String filePath = System.getProperty("user.dir") +"/adventOfCode/" +"src/main/resources/inputs/" + fileName;
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
         Map<Integer, String> allInput = new HashMap<>();

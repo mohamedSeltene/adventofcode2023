@@ -6,13 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-public class Day3_1 implements Input {
+public class Day3_2 implements Input {
     @Override
     public Object processInput() throws IOException {
         Map<Integer, String> input = readInput();
-        List<Number> adjacentNumbers = new ArrayList<>();
         List<Number> allNumbers = identifyNumbers(input);
         List<Coordonates> allSymbols = identifySymbols(input);
         for (Number number : allNumbers) {
@@ -22,15 +20,17 @@ public class Day3_1 implements Input {
                             && i <= symbol.getX() + 1
                             && number.getY() >= symbol.getY() - 1
                             && number.getY() <= symbol.getY() + 1) {
-                        adjacentNumbers.add(number);
-                        i = number.getLastX();
+                        symbol.addAdjacentNumber(number);
                         break;
                     }
                 }
             }
         }
-        return adjacentNumbers.stream().map(Number::getValue)
-                .mapToInt(integer -> integer)
+        return allSymbols.stream().filter(coordonates -> coordonates.getAdjacentNumbers().size()== 2)
+                .mapToInt(coordonates -> coordonates.getAdjacentNumbers().stream()
+                        .map(Number::getValue)
+                        .reduce((integer, integer2) -> integer * integer2)
+                        .get())
                 .sum();
     }
 
@@ -68,8 +68,6 @@ public class Day3_1 implements Input {
     }
 
     private boolean isSymbol(char c) {
-        return !Character.isLetter(c) && !Character.isDigit(c) && c != '.';
+        return !Character.isLetter(c) && !Character.isDigit(c) &&  c != '.';
     }
-
-
 }
