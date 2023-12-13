@@ -13,10 +13,10 @@ public class Day3_1 implements Input {
         Map<Integer, String> input = readInput();
         List<Number> adjacentNumbers = new ArrayList<>();
         List<Number> allNumbers = identifyNumbers(input);
-        List<Coordinate> allSymbols = identifySymbols(input);
+        List<Symbol> allSymbols = identifySymbols(input);
         for (Number number : allNumbers) {
             for (int i = number.getX(); i < number.getX() + number.getLength(); i++) {
-                for (Coordinate symbol : allSymbols) {
+                for (Symbol symbol : allSymbols) {
                     if (i >= symbol.getX() - 1
                             && i <= symbol.getX() + 1
                             && number.getY() >= symbol.getY() - 1
@@ -53,17 +53,17 @@ public class Day3_1 implements Input {
         return numbers;
     }
 
-    private List<Coordinate> identifySymbols(Map<Integer, String> input) {
-        List<Coordinate> coordinateList = new ArrayList<>();
+    private List<Symbol> identifySymbols(Map<Integer, String> input) {
+        List<Symbol> symbolList = new ArrayList<>();
         for (Map.Entry<Integer, String> line : input.entrySet()) {
             char[] currentLine = line.getValue().toCharArray();
             for (int i = 0; i < currentLine.length; i++) {
                 if (isSymbol(currentLine[i])) {
-                    coordinateList.add(new Coordinate(i, line.getKey()));
+                    symbolList.add(new Symbol(i, line.getKey()));
                 }
             }
         }
-        return coordinateList;
+        return symbolList;
     }
 
     private boolean isSymbol(char c) {
